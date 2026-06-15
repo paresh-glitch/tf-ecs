@@ -98,10 +98,10 @@ jobs:
         run: terraform validate
 
       - name: terraform plan
-        run: terraform plan -var-file="${{ env.ENV_NAME }}.tfvars"
+        run: terraform plan -var-file="${{ env.ENV_TAG }}.tfvars"
 
       - name: terraform apply
-        run: terraform apply -auto-approve -var-file="${{ env.ENV_NAME }}.tfvars"
+        run: terraform apply -auto-approve -var-file="${{ env.ENV_TAG }}.tfvars"
 
 
 
