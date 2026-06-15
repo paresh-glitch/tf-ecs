@@ -82,6 +82,14 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      - name: Set Deploy Environment Variables
+        run: |
+          if [ "${{ github.ref_name }}" = "main" ]; then
+            echo "ENV_TAG=prod" >> $GITHUB_ENV
+          else
+            echo "ENV_TAG=dev" >> $GITHUB_ENV
+          fi
+
       - name: Setup AWS Credentials for Terraform
         uses: aws-actions/configure-aws-credentials@v4
         with:
