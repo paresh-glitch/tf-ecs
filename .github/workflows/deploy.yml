@@ -75,22 +75,6 @@ jobs:
       - name: Login to ECR
         uses: aws-actions/amazon-ecr-login@v2
 
-      # Uses $ENV_TAG to automatically push to dev-frontend:latest or prod-frontend:latest
-      - name: Build and push frontend
-        run: |
-          docker build -t ${{ secrets.ECR_REGISTRY }}/${{ env.ENV_TAG }}-frontend:latest ./frontend
-          docker push ${{ secrets.ECR_REGISTRY }}/${{ env.ENV_TAG }}-frontend:latest
-
-      - name: Build and push backend
-        run: |
-          docker build -t ${{ secrets.ECR_REGISTRY }}/${{ env.ENV_TAG }}-backend:latest ./backend
-          docker push ${{ secrets.ECR_REGISTRY }}/${{ env.ENV_TAG }}-backend:latest
-
-      - name: Pull, tag, and push mongo
-        run: |
-          docker pull mongo:6
-          docker tag mongo:6 ${{ secrets.ECR_REGISTRY }}/${{ env.ENV_TAG }}-mongo:latest
-          docker push ${{ secrets.ECR_REGISTRY }}/${{ env.ENV_TAG }}-mongo:latest
 
   deploy:
     runs-on: ubuntu-latest
