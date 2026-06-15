@@ -1,0 +1,36 @@
+name: Destroy Production Infrastructure
+
+on:
+  workflow_dispatch:
+
+jobs:
+  terraform_destroy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Set Deploy Environment Variables
+        run: |
+          if [ "${{ github.ref_name }}" = "main" ]; then
+            echo "ENV_TAG=prod" >> $GITHUB_ENV
+          else
+            echo "ENV_TAG=dev" >> $GITHUB_ENV
+          fi
+
+
+      - name: Setup AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ secrets.AWS_REGION }}
+
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v4
+
+      - name: Terraform Init
+        run: terraform init
+
+      - name: Terraform Destroy
+        run: terraform destroy -auto-approve -var-file="${{ env.ENV_TAG }}.tfvars"
