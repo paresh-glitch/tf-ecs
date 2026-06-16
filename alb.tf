@@ -3,7 +3,7 @@ resource "aws_lb" "alb" {
   internal           = false
   load_balancer_type = "application"
   security_groups    = [aws_security_group.alb_sg.id]
-  subnets = module.vpc.public_subnets
+  subnets            = module.vpc.public_subnets
 
   tags = {
     Environment = var.env
@@ -18,7 +18,7 @@ resource "aws_lb_target_group" "tg" {
   vpc_id      = module.vpc.vpc_id
 
   tags = {
-    Name = "${var.env}-tg"
+    Name        = "${var.env}-tg"
     Environment = var.env
   }
 }

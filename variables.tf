@@ -1,20 +1,22 @@
 variable "env" {
   description = "environment name"
-  type = string
+  type        = string
 }
 
-variable "mongo_url" {
-  description = "this is for mongo image"
-  type = string
+variable "aws_account_id" {
+  description = "AWS account ID"
+  type        = string
+  default     = "030635937630"
 }
 
-variable "backend_url" {
-  description = "this is for backend image"
-  type = string
+variable "aws_region" {
+  description = "AWS region"
+  type        = string
+  default     = "ap-south-1"
 }
 
-variable "frontend_url" {
-  description = "this is for frontend image"
-  type = string
+variable "image_tag" {
+  description = "Docker image tag injected by CI pipeline"
+  type        = string
+  default     = "latest"
 }
-
