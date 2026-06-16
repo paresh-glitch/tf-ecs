@@ -2,7 +2,7 @@ name: cicd with terraform
 
 on:
   push:
-    branches: [main, dev]
+    branches: [main]
 
 permissions:
   id-token: write
